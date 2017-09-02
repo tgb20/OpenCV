@@ -186,3 +186,52 @@ if cv2.waitKey(1) & 0xFF == ord('q'):
 If q is pressed when close the capture, with close or release depending on the camera you are using. And then we close all windows to quit our program, the break exits the loop and stops our script.
 
 You should now be able to run the program and see a square around any faces it sees. The Raspberry Pi is limited in power so this will be slow, but it works!
+
+The Final Script for PiCamera:
+```python
+import cv2
+import time
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+
+cap = PiCamera()
+cap.resolution = (320, 240)
+cap.framerate = 30
+rawCapture = PiRGBArray(cap, size=(320, 240))
+
+for frame in cap.capture_continuous(rawCapture, format='bgr', use_video_port=True):
+    img = frame.array
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = classifer.detectMultiScale(gray, 1.3, 5)
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
+    cv2.imshow('Image', img)
+    rawCapture.truncate(0)
+    
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        cap.close()
+        cv2.destroyAllWindows()
+        break
+```
+The Final Script for a USB Webcam:
+```python
+import cv2
+import time
+
+cap = cv2.VideoCapture(0)
+cap.set(3, 320)
+cap.set(4, 240)
+
+while(True):
+    ret, img = cap.read()
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = classifer.detectMultiScale(gray, 1.3, 5)
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
+    cv2.imshow('Image', img)
+    
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        cap.release()
+        cv2.destroyAllWindows()
+        break
+```
