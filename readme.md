@@ -8,7 +8,7 @@ We will be using OpenCV with Python today so the installation is fairly simple. 
 
 To install OpenCV we need to open a terminal window.
 
-Once in the terminal we want to make sure everything is up to date by typing `sudo apt-get update`. This command updates tools and programs that are on the Pi, it makes sure everything will run smoothly.
+Once in the terminal we want to make sure everything is up to date by typing `sudo apt-get update`. This command updates the list of packages that we can access. Making sure we can access the opencv installer.
 
 When that finishes we can install OpenCV with `sudo apt-get install python-opencv`. This installs the Python 2 version of OpenCV, cv2.
 
