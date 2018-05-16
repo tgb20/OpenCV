@@ -199,6 +199,8 @@ cap.resolution = (320, 240)
 cap.framerate = 30
 rawCapture = PiRGBArray(cap, size=(320, 240))
 
+classifer = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+time.sleep(1)
 for frame in cap.capture_continuous(rawCapture, format='bgr', use_video_port=True):
     img = frame.array
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -222,6 +224,8 @@ cap = cv2.VideoCapture(0)
 cap.set(3, 320)
 cap.set(4, 240)
 
+classifer = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+time.sleep(1)
 while(True):
     ret, img = cap.read()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
